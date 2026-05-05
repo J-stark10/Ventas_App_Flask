@@ -1,76 +1,104 @@
-{% extends "base.html" %}
-
-{% block title %}Ventas — Listado{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %}Ventas — Listado{% endblock %} {%
+block content %}
 
 <!-- Encabezado -->
 <div class="page-header">
-    <h1 class="page-title">
-        <span class="label">Módulo</span>
-        Registro de Ventas
-    </h1>
-    <a href="/create" class="btn btn-accent">
-        <i class="bi bi-plus-lg me-1"></i> Nueva Venta
-    </a>
+  <h1 class="page-title">
+    <span class="label">Módulo</span>
+    Registro de Ventas
+  </h1>
+  <a href="/create" class="btn btn-accent">
+    <i class="bi bi-plus-lg me-1"></i> Nueva Venta
+  </a>
 </div>
 
 <!-- Tabla de ventas -->
 <div class="table-card">
-    {% if ventas %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Cliente</th>
-                <th>Producto</th>
-                <th>Cantidad</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for venta in ventas %}
-            <tr>
-                <td><span class="id-badge">#{{ venta.id }}</span></td>
-                <td>
-                    <i class="bi bi-person-circle me-1 text-muted"></i>
-                    {{ venta.cliente }}
-                </td>
-                <td>
-                    <i class="bi bi-box me-1 text-muted"></i>
-                    {{ venta.producto }}
-                </td>
-                <td>
-                    <span class="cantidad-badge">{{ venta.cantidad }}</span>
-                    <span class="text-muted" style="font-size:0.8rem"> ud.</span>
-                </td>
-                <td>
-                    <a href="/edit/{{ venta.id }}" class="action-btn edit me-1">
-                        <i class="bi bi-pencil me-1"></i>Editar
-                    </a>
-                    <a href="/delete/{{ venta.id }}"
-                       class="action-btn del"
-                       onclick="return confirm('¿Eliminar esta venta?')">
-                        <i class="bi bi-trash me-1"></i>Borrar
-                    </a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+  {% if ventas %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Cliente</th>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Precio</th>
+        <th>Total</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for venta in ventas %}
+      <tr>
+        <td>
+          <span class="id-badge">#{{ venta.id }}</span>
+        </td>
 
-    <!-- Pie de tabla -->
-    <div class="px-3 py-2" style="border-top:1px solid var(--color-border); font-size:0.8rem; color:var(--color-muted);">
-        {{ ventas|length }} registro{% if ventas|length != 1 %}s{% endif %} en total
-    </div>
+        <td>
+          <i class="bi bi-person-circle me-1 text-muted"></i>
+          {{ venta.cliente }}
+        </td>
 
-    {% else %}
-    <!-- Estado vacío -->
-    <div class="empty-state">
-        <i class="bi bi-receipt"></i>
-        <p>No hay ventas registradas. <a href="/create">Crear la primera</a>.</p>
-    </div>
-    {% endif %}
+        <td>
+          <i class="bi bi-box me-1 text-muted"></i>
+          {{ venta.producto }}
+        </td>
+
+        <td>
+          <span class="cantidad-badge">{{ venta.cantidad }}</span>
+          <span class="text-muted" style="font-size: 0.8rem"> ud.</span>
+        </td>
+
+        <!-- 💰 Precio -->
+        <td>
+          <span style="font-family: &quot;Space Mono&quot;, monospace">
+            $ {{ venta.precio }}
+          </span>
+        </td>
+
+        <!-- 🧾 Total -->
+        <td>
+          <strong style="color: var(--color-accent)">
+            $ {{ venta.total }}
+          </strong>
+        </td>
+
+        <td>
+          <a href="/edit/{{ venta.id }}" class="action-btn edit me-1">
+            <i class="bi bi-pencil me-1"></i>Editar
+          </a>
+          <a
+            href="/delete/{{ venta.id }}"
+            class="action-btn del"
+            onclick="return confirm('¿Eliminar esta venta?');"
+          >
+            <i class="bi bi-trash me-1"></i>Borrar
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Pie de tabla -->
+  <div
+    class="px-3 py-2"
+    style="
+      border-top: 1px solid var(--color-border);
+      font-size: 0.8rem;
+      color: var(--color-muted);
+    "
+  >
+    {{ ventas|length }} registro{% if ventas|length != 1 %}s{% endif %} en total
+  </div>
+
+  {% else %}
+  <!-- Estado vacío -->
+  <div class="empty-state">
+    <i class="bi bi-receipt"></i>
+    <p>No hay ventas registradas. <a href="/create">Crear la primera</a>.</p>
+  </div>
+  {% endif %}
 </div>
 
 {% endblock %}

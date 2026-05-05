@@ -1,78 +1,124 @@
-{% extends "base.html" %}
-
-{% block title %}Nueva Venta{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %}Nueva Venta{% endblock %} {% block
+content %}
 
 <!-- Encabezado -->
 <div class="page-header">
-    <h1 class="page-title">
-        <span class="label">Acción</span>
-        Nueva Venta
-    </h1>
+  <h1 class="page-title">
+    <span class="label">Acción</span>
+    Nueva Venta
+  </h1>
 </div>
 
 <!-- Formulario -->
 <div class="form-card">
-    <form action="/save" method="POST">
+  <form action="/save" method="POST">
+    <!-- Cliente -->
+    <div class="mb-3">
+      <label class="form-label">
+        <i class="bi bi-person me-1"></i>Cliente
+      </label>
+      <select class="form-select" name="cliente_id" required>
+        <option value="" disabled selected>— Seleccionar cliente —</option>
+        {% for cliente in clientes %}
+        <option value="{{ cliente.id }}">{{ cliente.nombre }}</option>
+        {% endfor %}
+      </select>
+    </div>
 
-        <!-- Select: Cliente -->
-        <div class="mb-3">
-            <label class="form-label" for="cliente_id">
-                <i class="bi bi-person me-1"></i>Cliente
-            </label>
-            <select class="form-select" id="cliente_id" name="cliente_id" required>
-                <option value="" disabled selected>— Seleccionar cliente —</option>
-                {% for cliente in clientes %}
-                    <!--
-                        El <option> muestra el NOMBRE visible para el usuario
-                        pero envía el ID al servidor (value="{{ cliente.id }}")
-                    -->
-                    <option value="{{ cliente.id }}">{{ cliente.nombre }}</option>
-                {% endfor %}
-            </select>
-        </div>
+    <!-- Producto -->
+    <div class="mb-3">
+      <label class="form-label"> <i class="bi bi-box me-1"></i>Producto </label>
+      <select class="form-select" id="producto_id" name="producto_id" required>
+        <option value="" disabled selected>— Seleccionar producto —</option>
+        {% for producto in productos %}
+        <option value="{{ producto.id }}">{{ producto.nombre }}</option>
+        {% endfor %}
+      </select>
+    </div>
 
-        <!-- Select: Producto -->
-        <div class="mb-3">
-            <label class="form-label" for="producto_id">
-                <i class="bi bi-box me-1"></i>Producto
-            </label>
-            <select class="form-select" id="producto_id" name="producto_id" required>
-                <option value="" disabled selected>— Seleccionar producto —</option>
-                {% for producto in productos %}
-                    <option value="{{ producto.id }}">{{ producto.nombre }}</option>
-                {% endfor %}
-            </select>
-        </div>
+    <!-- Cantidad y Precio -->
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label">
+          <i class="bi bi-hash me-1"></i>Cantidad
+        </label>
+        <input
+          type="number"
+          class="form-control"
+          id="cantidad"
+          name="cantidad"
+          min="1"
+          placeholder="Ej: 1"
+          required
+        />
+      </div>
 
-        <!-- Input: Cantidad -->
-        <div class="mb-3">
-            <label class="form-label" for="cantidad">
-                <i class="bi bi-hash me-1"></i>Cantidad
-            </label>
-            <input
-                type="number"
-                class="form-control"
-                id="cantidad"
-                name="cantidad"
-                min="1"
-                placeholder="Ej: 3"
-                required
-            >
-        </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Precio</label>
+        <input type="text" id="precio" class="form-control" readonly />
+      </div>
+    </div>
 
-        <!-- Botones -->
-        <div class="form-actions">
-            <button type="submit" class="btn btn-accent">
-                <i class="bi bi-check-lg me-1"></i> Guardar Venta
-            </button>
-            <a href="/" class="btn btn-outline-dark-custom">
-                <i class="bi bi-arrow-left me-1"></i> Cancelar
-            </a>
-        </div>
+    <!-- Total -->
+    <div class="text-end mt-1">
+      <small class="text-muted">Total</small>
+      <h5 id="total" style="color: var(--color-accent)">$ 0</h5>
+    </div>
 
-    </form>
+    <!-- Botones -->
+    <div class="form-actions">
+      <button type="submit" class="btn btn-accent">
+        <i class="bi bi-check-lg me-1"></i> Guardar Venta
+      </button>
+      <a href="/" class="btn btn-outline-dark-custom">
+        <i class="bi bi-arrow-left me-1"></i> Cancelar
+      </a>
+    </div>
+  </form>
 </div>
+
+<!-- SCRIPT -->
+<script>
+  const productos = {
+    {% for p in productos %}
+      "{{ p.id }}": {{ p.precio }}{% if not loop.last %},{% endif %}
+    {% endfor %}
+  };
+
+  const productoSelect = document.getElementById("producto_id");
+  const cantidadInput = document.getElementById("cantidad");
+  const precioInput = document.getElementById("precio");
+  const totalInput = document.getElementById("total");
+
+  function calcular() {
+    const productoId = productoSelect.value;
+    const cantidad = parseInt(cantidadInput.value) || 0;
+
+    if (productoId && productos[productoId] !== undefined) {
+      const precio = productos[productoId];
+      const total = precio * cantidad;
+
+      // 💰 Formato simple
+      precioInput.value = "$ " + precio.toFixed(2);
+      totalInput.innerText = "$ " + total.toFixed(2);
+    } else {
+      precioInput.value = "";
+      totalInput.innerText = "$ 0.00";
+    }
+  }
+
+  // Eventos
+  productoSelect.addEventListener("change", () => {
+    if (!cantidadInput.value) {
+      cantidadInput.value = 1;
+    }
+    calcular();
+  });
+
+  cantidadInput.addEventListener("input", calcular);
+
+  // 🔥 Ejecutar al cargar
+  window.addEventListener("load", calcular);
+</script>
 
 {% endblock %}
