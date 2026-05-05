@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Venta #{{ venta.id }}{% endblock %}
+
+{% block content %}
+
+<!-- Encabezado -->
+<div class="page-header">
+    <h1 class="page-title">
+        <span class="label">Acción</span>
+        Editar Venta <span style="color:var(--color-accent)">#{{ venta.id }}</span>
+    </h1>
+</div>
+
+<!-- Formulario de edición -->
+<div class="form-card">
+    <form action="/update" method="POST">
+
+        <!-- Campo oculto: enviamos el ID de la venta para saber cuál actualizar -->
+        <input type="hidden" name="id" value="{{ venta.id }}">
+
+        <!-- Select: Cliente (opción actual pre-seleccionada) -->
+        <div class="mb-3">
+            <label class="form-label" for="cliente_id">
+                <i class="bi bi-person me-1"></i>Cliente
+            </label>
+            <select class="form-select" id="cliente_id" name="cliente_id" required>
+                {% for cliente in clientes %}
+                    <!--
+                        Comparamos el ID del cliente de la lista
+                        con el cliente_id de la venta actual.
+                        Si coinciden → agregamos "selected" para pre-seleccionar.
+                    -->
+                    <option value="{{ cliente.id }}"
+                        {% if cliente.id == venta.cliente_id %}selected{% endif %}>
+                        {{ cliente.nombre }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Select: Producto (opción actual pre-seleccionada) -->
+        <div class="mb-3">
+            <label class="form-label" for="producto_id">
+                <i class="bi bi-box me-1"></i>Producto
+            </label>
+            <select class="form-select" id="producto_id" name="producto_id" required>
+                {% for producto in productos %}
+                    <option value="{{ producto.id }}"
+                        {% if producto.id == venta.producto_id %}selected{% endif %}>
+                        {{ producto.nombre }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Input: Cantidad (valor actual cargado) -->
+        <div class="mb-3">
+            <label class="form-label" for="cantidad">
+                <i class="bi bi-hash me-1"></i>Cantidad
+            </label>
+            <input
+                type="number"
+                class="form-control"
+                id="cantidad"
+                name="cantidad"
+                min="1"
+                value="{{ venta.cantidad }}"
+                required
+            >
+        </div>
+
+        <!-- Botones -->
+        <div class="form-actions">
+            <button type="submit" class="btn btn-accent">
+                <i class="bi bi-check-lg me-1"></i> Actualizar
+            </button>
+            <a href="/" class="btn btn-outline-dark-custom">
+                <i class="bi bi-arrow-left me-1"></i> Cancelar
+            </a>
+        </div>
+
+    </form>
+</div>
+
+{% endblock %}

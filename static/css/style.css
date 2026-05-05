@@ -1,0 +1,294 @@
+:root {
+  --color-bg: #0f0f0f;
+  --color-surface: #1a1a1a;
+  --color-accent: #ff6b35;
+  --color-dark: #e8e8e8;
+  --color-muted: #999;
+  --color-border: #333;
+}
+
+body {
+  background-color: var(--color-bg);
+  font-family: "DM Sans", sans-serif;
+  color: var(--color-dark);
+  min-height: 100vh;
+}
+
+/* ── Navbar ── */
+.navbar {
+  background-color: #1a1a1a;
+  border-bottom: 3px solid var(--color-accent);
+  padding: 0.9rem 0;
+}
+.navbar-brand {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #fff !important;
+  letter-spacing: -0.5px;
+}
+.navbar-brand span {
+  color: var(--color-accent);
+}
+.nav-link {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-link:hover {
+  color: #fff !important;
+}
+
+/* ── Contenido ── */
+.main-wrapper {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+/* ── Encabezado de página ── */
+.page-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid var(--color-border);
+  padding-bottom: 1rem;
+}
+.page-title {
+  font-family: "Space Mono", monospace;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+.page-title .label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--color-muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+/* ── Botones ── */
+.btn-accent {
+  background-color: var(--color-accent);
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 6px;
+  transition:
+    background 0.2s,
+    transform 0.1s;
+}
+.btn-accent:hover {
+  background-color: #e55a24;
+  color: #fff;
+  transform: translateY(-1px);
+}
+.btn-outline-dark-custom {
+  border: 1.5px solid var(--color-dark);
+  color: var(--color-dark);
+  background: transparent;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.45rem 1rem;
+  border-radius: 6px;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+.btn-outline-dark-custom:hover {
+  background: var(--color-dark);
+  color: #1a1a1a;
+}
+
+/* ── Tabla ── */
+.table-card {
+  background: var(--color-surface);
+  border-radius: 12px;
+  border: 1.5px solid var(--color-border);
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+.table {
+  margin: 0;
+  font-size: 0.9rem;
+}
+.table thead th {
+  background-color: #242424;
+  color: #fff;
+  font-family: "Space Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 0.9rem 1.2rem;
+  border: none;
+}
+.table tbody {
+  background-color: var(--color-surface) !important;
+}
+.table tbody td {
+  padding: 0.85rem 1.2rem !important;
+  vertical-align: middle !important;
+  border-bottom: 1px solid var(--color-border) !important;
+  color: #e8e8e8 !important;
+  background-color: var(--color-surface) !important;
+}
+.table tbody tr {
+  background-color: var(--color-surface) !important;
+}
+.table tbody tr:last-child td {
+  border-bottom: none !important;
+}
+.table tbody tr:hover {
+  background-color: #242424 !important;
+}
+.table tbody tr:hover td {
+  color: #e8e8e8 !important;
+  background-color: #242424 !important;
+}
+
+.id-badge {
+  font-family: "Space Mono", monospace;
+  font-size: 0.75rem;
+  background: rgba(255, 107, 53, 0.15);
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent);
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+.cantidad-badge {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--color-accent);
+}
+.action-btn {
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.35rem 0.8rem;
+  transition:
+    background 0.2s,
+    transform 0.1s;
+  border: none;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.action-btn.edit,
+.action-btn.edit:hover,
+.action-btn.del,
+.action-btn.del:hover {
+  color: #fff !important;
+}
+
+/* ✏️ EDITAR — acento naranja del proyecto */
+.action-btn.edit {
+  background-color: var(--color-accent);
+  color: #fff !important;
+}
+
+.action-btn.edit:hover {
+  background-color: #e55a24;
+  transform: translateY(-1px);
+}
+
+/* 🗑 ELIMINAR — rojo oscuro para tema oscuro */
+.action-btn.del {
+  background-color: #ff4757;
+  color: #fff !important;
+}
+
+.action-btn.del:hover {
+  background-color: #e14b4b;
+  transform: translateY(-1px);
+}
+/* ── Formulario ── */
+.form-card {
+  background: var(--color-surface);
+  border-radius: 12px;
+  border: 1.5px solid var(--color-border);
+  padding: 2rem 2.2rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+  max-width: 560px;
+}
+.form-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: 0.4rem;
+}
+.form-control,
+.form-select {
+  border: 1.5px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 0.93rem;
+  padding: 0.6rem 0.9rem;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  background-color: #242424;
+  color: var(--color-dark);
+}
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.25);
+  background-color: #2a2a2a;
+  color: var(--color-dark);
+}
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.8rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+/* ── Empty state ── */
+.empty-state {
+  text-align: center;
+  padding: 3.5rem 1rem;
+  color: var(--color-muted);
+}
+.empty-state i {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+.empty-state p {
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* ── Ajustes oscuros ── */
+.table tbody i {
+  color: #999 !important;
+}
+.table tbody .text-muted {
+  color: #999 !important;
+}
+.text-muted {
+  color: var(--color-muted) !important;
+}
+.table tbody a {
+  color: #e8e8e8 !important;
+}
+.table tbody a:hover {
+  color: var(--color-accent) !important;
+}
+
+/* ── Pie de tabla ── */
+.table-card > div {
+  background-color: var(--color-surface) !important;
+  color: var(--color-dark) !important;
+}

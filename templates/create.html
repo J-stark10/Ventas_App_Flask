@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Nueva Venta{% endblock %}
+
+{% block content %}
+
+<!-- Encabezado -->
+<div class="page-header">
+    <h1 class="page-title">
+        <span class="label">Acción</span>
+        Nueva Venta
+    </h1>
+</div>
+
+<!-- Formulario -->
+<div class="form-card">
+    <form action="/save" method="POST">
+
+        <!-- Select: Cliente -->
+        <div class="mb-3">
+            <label class="form-label" for="cliente_id">
+                <i class="bi bi-person me-1"></i>Cliente
+            </label>
+            <select class="form-select" id="cliente_id" name="cliente_id" required>
+                <option value="" disabled selected>— Seleccionar cliente —</option>
+                {% for cliente in clientes %}
+                    <!--
+                        El <option> muestra el NOMBRE visible para el usuario
+                        pero envía el ID al servidor (value="{{ cliente.id }}")
+                    -->
+                    <option value="{{ cliente.id }}">{{ cliente.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Select: Producto -->
+        <div class="mb-3">
+            <label class="form-label" for="producto_id">
+                <i class="bi bi-box me-1"></i>Producto
+            </label>
+            <select class="form-select" id="producto_id" name="producto_id" required>
+                <option value="" disabled selected>— Seleccionar producto —</option>
+                {% for producto in productos %}
+                    <option value="{{ producto.id }}">{{ producto.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Input: Cantidad -->
+        <div class="mb-3">
+            <label class="form-label" for="cantidad">
+                <i class="bi bi-hash me-1"></i>Cantidad
+            </label>
+            <input
+                type="number"
+                class="form-control"
+                id="cantidad"
+                name="cantidad"
+                min="1"
+                placeholder="Ej: 3"
+                required
+            >
+        </div>
+
+        <!-- Botones -->
+        <div class="form-actions">
+            <button type="submit" class="btn btn-accent">
+                <i class="bi bi-check-lg me-1"></i> Guardar Venta
+            </button>
+            <a href="/" class="btn btn-outline-dark-custom">
+                <i class="bi bi-arrow-left me-1"></i> Cancelar
+            </a>
+        </div>
+
+    </form>
+</div>
+
+{% endblock %}
