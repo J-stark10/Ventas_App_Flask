@@ -272,7 +272,7 @@ body {
 
 /* ── Ajustes oscuros ── */
 .table tbody i {
-  color: #999 !important;
+  color: #fff !important;
 }
 .table tbody .text-muted {
   color: #999 !important;
