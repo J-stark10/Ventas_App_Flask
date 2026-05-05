@@ -3,9 +3,7 @@ import sqlite3
 
 app = Flask(__name__)
 
-# ─────────────────────────────────────────
 # CREACIÓN DE BASE DE DATOS Y TABLAS
-# ─────────────────────────────────────────
 def init_database():
     conn = sqlite3.connect("ventas.db")
 
@@ -26,7 +24,7 @@ def init_database():
         )
     """)
 
-    # 🔥 Tabla ventas ahora con PRECIO
+    # Tabla ventas ahora con PRECIO
     conn.execute("""
         CREATE TABLE IF NOT EXISTS ventas (
             id          INTEGER PRIMARY KEY,
@@ -62,9 +60,7 @@ def init_database():
 
 init_database()
 
-# ─────────────────────────────────────────
 # INDEX
-# ─────────────────────────────────────────
 @app.route("/")
 def index():
     conn = sqlite3.connect("ventas.db")
@@ -90,9 +86,7 @@ def index():
 
     return render_template("index.html", ventas=ventas)
 
-# ─────────────────────────────────────────
 # CREATE
-# ─────────────────────────────────────────
 @app.route("/create")
 def create():
     conn = sqlite3.connect("ventas.db")
@@ -108,9 +102,7 @@ def create():
     conn.close()
     return render_template("create.html", clientes=clientes, productos=productos)
 
-# ─────────────────────────────────────────
 # SAVE
-# ─────────────────────────────────────────
 @app.route("/save", methods=["POST"])
 def save():
     cliente_id  = request.form["cliente_id"]
@@ -120,11 +112,11 @@ def save():
     conn = sqlite3.connect("ventas.db")
     cursor = conn.cursor()
 
-    # 🔥 Obtener precio del producto
+    # Obtener precio del producto
     cursor.execute("SELECT precio FROM productos WHERE id = ?", (producto_id,))
     precio = cursor.fetchone()[0]
 
-    # 🔥 Guardar precio en la venta
+    # Guardar precio en la venta
     cursor.execute("""
         INSERT INTO ventas (cliente_id, producto_id, cantidad, precio)
         VALUES (?, ?, ?, ?)
@@ -134,9 +126,8 @@ def save():
     conn.close()
     return redirect("/")
 
-# ─────────────────────────────────────────
+
 # EDIT
-# ─────────────────────────────────────────
 @app.route("/edit/<int:id>")
 def edit(id):
     conn = sqlite3.connect("ventas.db")
@@ -155,9 +146,7 @@ def edit(id):
     conn.close()
     return render_template("edit.html", venta=venta, clientes=clientes, productos=productos)
 
-# ─────────────────────────────────────────
 # UPDATE
-# ─────────────────────────────────────────
 @app.route("/update", methods=["POST"])
 def update():
     id          = request.form["id"]
@@ -168,7 +157,7 @@ def update():
     conn = sqlite3.connect("ventas.db")
     cursor = conn.cursor()
 
-    # 🔥 Obtener precio actualizado
+    # Obtener precio actualizado
     cursor.execute("SELECT precio FROM productos WHERE id = ?", (producto_id,))
     precio = cursor.fetchone()[0]
 
@@ -182,9 +171,7 @@ def update():
     conn.close()
     return redirect("/")
 
-# ─────────────────────────────────────────
 # DELETE
-# ─────────────────────────────────────────
 @app.route("/delete/<int:id>")
 def delete(id):
     conn = sqlite3.connect("ventas.db")

@@ -98,7 +98,7 @@ content %}
       const precio = productos[productoId];
       const total = precio * cantidad;
 
-      // 💰 Formato simple
+      // Formato simple
       precioInput.value = "$ " + precio.toFixed(2);
       totalInput.innerText = "$ " + total.toFixed(2);
     } else {
@@ -117,7 +117,7 @@ content %}
 
   cantidadInput.addEventListener("input", calcular);
 
-  // 🔥 Ejecutar al cargar
+  // Ejecutar al cargar
   window.addEventListener("load", calcular);
 </script>
 
